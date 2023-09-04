@@ -21,8 +21,8 @@ const menuHamIcon = document.querySelector(".menu")
 //tarea 4 - debe desaparecer el menu de carro y aparecer cuando se le da click 
 //
 
-const carMenu = document.querySelector(".product-detail")
-const carIcon = document.querySelector(".navbar-shopping-cart")
+const carMenu = document.querySelector("#shoppingCartContainer");
+const carIcon = document.querySelector(".navbar-shopping-cart");
 
 //tarea 5 - crear la lista de productos 
 
@@ -51,98 +51,9 @@ productList.push({
 
 const cardsContainer = document.querySelector('.cards-container')
 
-
-//////////////////////////////////////////////////////////////
-
-menuEmail.addEventListener('click', toggleDesktopMenu)
-
-menuHamIcon.addEventListener('click', toggleMobileMenu)
-
-carIcon.addEventListener('click', toggleCarMenu)
-
-//reto solucion propia:
-/* function toggleDesktopMenu(event){
-    
-    var  desktopMenuClass = desktopMenu.className
-
-    if(desktopMenuClass === "desktop-menu"){
-        event.menuEmail
-        desktopMenu.classList.add('inactive')
-        return
-
-    }else if(desktopMenuClass === "desktop-menu inactive"){
-        desktopMenu.classList.remove('inactive')
-        return
-    }
-
-
-} */
-
-//solucion platzi tarea 1
-
-function toggleDesktopMenu(event) {
-    console.log(event)
-
-    
-    const iscarMenuOpen = !carMenu.classList.contains('inactive')  
-    
-    if(iscarMenuOpen){ 
-        carMenu.classList.toggle('inactive')
-        desktopMenu.classList.toggle('inactive');
-    }else{
-        desktopMenu.classList.toggle('inactive');}
-
-}
-
-//tarea 2
-function toggleMobileMenu() {
-    mobileMenu.classList.toggle('inactive');
-    
-    const ismobileMenuOpen = !mobileMenu.classList.contains('inactive')
-    const iscarMenuOpen = !carMenu.classList.contains('inactive')        
-
-    //cerrar otros menus
-    if (iscarMenuOpen && ismobileMenuOpen ){
-        carMenu.classList.toggle('inactive');
-    }
-}
-
-//tarea 4 car menu
-function toggleCarMenu() {
-    
-    carMenu.classList.toggle('inactive');
-
-    const ismobileMenuOpen = !mobileMenu.classList.contains('inactive')
-    const iscarMenuOpen = !carMenu.classList.contains('inactive')
-    const isdesktopMenuOpen = !desktopMenu.classList.contains('inactive')  
-
-    //cerrar otros menus
-    if (iscarMenuOpen && ismobileMenuOpen ){
-        mobileMenu.classList.toggle('inactive');
-    }
-   if (iscarMenuOpen && isdesktopMenuOpen){
-    desktopMenu.classList.toggle('inactive');
-    
-   }
-}
-
-
-/* <div class="product-card">
-        <img src="https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" alt="">
-        <div class="product-info">
-          <div>
-            <p>$120,00</p>
-            <p>Bike</p>
-          </div>
-          <figure>
-            <img src="./icons/bt_add_to_cart.svg" alt="">
-          </figure>
-        </div>
-      </div> */
-
-
 //tarea 5 crear los divs de los articulos
-for (product of productList){
+function renderProducts(arr) {
+    for (product of arr) {
     const productCard = document.createElement('div');
     productCard.classList.add('product-card');
 
@@ -176,5 +87,71 @@ for (product of productList){
     productCard.appendChild(productInfo);
 
     cardsContainer.appendChild(productCard)
+}
+}
+renderProducts(productList);
+
+//tarea 6 hacer que al darle click a un producto aparezca el aside con el detalle del producto
+
+const productDetailInfo = document.querySelector("#product-detail")
+const productImgClick = document.querySelector('.cards-container')
+
+
+//////////////////////////////////////////////////////////////
+
+//listeners:
+
+menuEmail.addEventListener('click', toggleDesktopMenu)
+
+menuHamIcon.addEventListener('click', toggleMobileMenu)
+
+carIcon.addEventListener('click', toggleCarMenu)
+
+productImgClick.addEventListener('click', toggleProductDetail)
+
+///////////////////////////////////////////////////////////
+
+
+
+//solucion platzi tarea 1
+
+function toggleDesktopMenu() {
+    
+    desktopMenu.classList.toggle("inactive")
+    carMenu.classList.add("inactive")
+    productDetailInfo.classList.add("inactive")
+}
+
+//tarea 2
+function toggleMobileMenu() {
+    
+    mobileMenu.classList.toggle('inactive');
+    carMenu.classList.add("inactive")
+    productDetailInfo.classList.add("inactive")
+}
+
+//tarea 4 car menu
+function toggleCarMenu() {
+    
+    carMenu.classList.toggle('inactive');
+
+    desktopMenu.classList.add("inactive")
+    productDetailInfo.classList.add("inactive")
+    mobileMenu.classList.add('inactive');
 
 }
+
+// tarea 6 - product detail 
+function toggleProductDetail() {
+    
+    productDetailInfo.classList.toggle('inactive')
+
+    carMenu.classList.add('inactive');
+    desktopMenu.classList.add("inactive")
+    mobileMenu.classList.add('inactive');
+
+
+}
+
+
+
